@@ -1,9 +1,11 @@
 import { getHardhatProvider, assertValidAddress } from "../utils";
 
 /**
- * Allows Hardhat Network to sign transactions as the given address
+ * Allows Hardhat Network to sign transactions as the given address.
  *
- * @param address The address to impersonate
+ * @param address The address to impersonate.
+ * @example
+ * await helpers.impersonateAccount(address);
  */
 export async function impersonateAccount(address: string): Promise<void> {
   const provider = await getHardhatProvider();

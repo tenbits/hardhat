@@ -5,10 +5,12 @@ import {
 } from "../utils";
 
 /**
- * Modifies the bytecode stored at an account's address
+ * Modifies the bytecode stored at an account's address.
  *
- * @param address The address where the given code should be stored
- * @param code The code to store
+ * @param address The address where the given code should be stored.
+ * @param code The code to store.
+ * @example
+ * await helpers.setCode(address, "0x1234...");
  */
 export async function setCode(address: string, code: string): Promise<void> {
   const provider = await getHardhatProvider();

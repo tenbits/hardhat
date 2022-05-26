@@ -1,9 +1,11 @@
 import { getHardhatProvider, assertValidAddress } from "../utils";
 
 /**
- * Stops Hardhat Network from impersonating the given address
+ * Stops Hardhat Network from impersonating the given address.
  *
- * @param address The address to stop impersonating
+ * @param address The address to stop impersonating.
+ * @example
+ * await helpers.stopImpersonatingAccount(address);
  */
 export async function stopImpersonatingAccount(address: string): Promise<void> {
   const provider = await getHardhatProvider();

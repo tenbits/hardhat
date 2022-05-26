@@ -10,9 +10,11 @@ import {
 import { latestBlock } from "./time/latestBlock";
 
 /**
- * Mines new blocks until the latest block number is `blockNumber`
+ * Mines new blocks until the latest block number is `blockNumber`.
  *
- * @param blockNumber Must be greater than the latest block's number
+ * @param blockNumber Must be greater than the latest block's number.
+ * @example
+ * await helpers.mineUpTo(1234);
  */
 export async function mineUpTo(blockNumber: NumberLike): Promise<void> {
   const provider = await getHardhatProvider();

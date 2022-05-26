@@ -6,10 +6,12 @@ import {
 } from "../utils";
 
 /**
- * Modifies an account's nonce by overwriting it
+ * Modifies an account's nonce by overwriting it.
  *
- * @param address The address whose nonce is to be changed
- * @param nonce The new nonce
+ * @param address The address whose nonce is to be changed.
+ * @param nonce The new nonce.
+ * @example
+ * await helpers.setNonce(address, 100);
  */
 export async function setNonce(
   address: string,

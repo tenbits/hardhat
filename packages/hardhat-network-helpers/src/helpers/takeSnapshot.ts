@@ -12,8 +12,13 @@ export interface SnapshotRestorer {
 /**
  * Takes a snapshot of the state of the blockchain at the current block.
  *
- * Returns an object with a `restore` method that can be used to reset the
- * network to this state.
+ * @returns An object with a `restore` method that can be used to reset the network to this state.
+ * @example
+ * // take a snapshot of the current state of the blockchain
+ * const snapshot = await helpers.takeSnapshot();
+
+ * // after doing some changes, you can restore to the state of the snapshot
+ * await snapshot.restore();
  */
 export async function takeSnapshot(): Promise<SnapshotRestorer> {
   const provider = await getHardhatProvider();

@@ -1,0 +1,253 @@
+# Reference
+
+## Numbers
+
+When `@nomicfoundation/hardhat-chai-matchers` is used, equality comparisons of numbers will work even if the numbers are represented by different types. This means that assertions like this:
+
+```ts
+expect(await token.totalSupply()).to.equal(1_000_000);
+```
+
+will work. These assertions don't normally work because the value returned by `totalSupply()` is an [ethers' BigNumber](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/), and an instance of a `BigNumber` will always be different than a plain number.
+
+
+The supported types are:
+
+- Plain javascript numbers
+- [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+- [Ethers' BigNumbers](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/)
+- [`bn.js`](https://github.com/indutny/bn.js/) instances
+- [`bignumber.js`](https://github.com/MikeMcl/bignumber.js/) instances
+
+
+This also works when deep-equal comparisons of arrays or objects are performed:
+
+```ts
+expect(await contract.getRatio()).to.deep.equal([100, 55])
+```
+
+## Reverted transactions
+
+Several matchers are included to assert that a transaction reverted, and the reason of the revert.
+
+### `.reverted()`
+
+Assert that a transaction reverted for any reason, without checking the cause of the revert:
+
+```ts
+await expect(token.transfer(address, 0)).to.be.reverted();
+```
+
+`.reverted` can also be used as a property (without parentheses), but we recommend using the method version.
+
+### `.revertedWith`
+
+Assert that a transaction reverted with a given string reason:
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWith("transfer value must be positive");
+```
+
+### `.revertedWithCustomError`
+
+Assert that a transaction reverted with a given [custom error](https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement):
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithCustomError(token, "InvalidTransferValue");
+```
+
+The first argument must be the contract that defines the error.
+
+If the error has arguments, the `.withArgs` matcher can be added:
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithCustomError(token, "InvalidTransferValue")
+  .withArgs(0);
+```
+
+Check the `.withArgs` matcher entry to learn more.
+
+### `.revertedWithPanic`
+
+Assert that a transaction reverted with some [panic code](https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require):
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithPanic();
+```
+
+An optional argument can be passed to assert that a given panic code was thrown:
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithPanic(0x12);
+```
+
+You can also import and use the `PANIC_CODES` dictionary:
+
+```ts
+import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
+
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithPanic(PANIC_CODES.DIVISION_BY_ZERO);
+```
+
+### `.revertedWithoutReason`
+
+Assert that a transaction reverted without returning a reason:
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithoutReason();
+```
+
+This matcher differs from `.reverted()` in that it will fail if the transaction reverts with a reason string, custom error or panic code. Examples of Solidity expressions that revert without a reason are `require(false)` (without the reason string) and `assert(false)` before Solidity v0.8.0. This also happens for out-of-gas errors.
+
+## Events
+
+### `.emit`
+
+Assert that a transaction emits a given event:
+
+```ts
+await expect(token.transfer(address, 100))
+  .to.emit(token, "Transfer");
+```
+
+The first argument must be the contract that emits the event.
+
+If the event has arguments, the `.withArgs` matcher can be added:
+
+```ts
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithCustomError(token, "InvalidTransferValue")
+  .withArgs(100);
+```
+
+Check the `.withArgs` matcher entry to learn more.
+
+## Balance change
+
+These matchers can be used to assert how the balance in ether or in some ERC20 token of a given address changed after the given transaction.
+
+All these matchers assume that the given transaction is the only transaction mined in its block.
+
+### `.changeEtherBalance`
+
+Assert that the balance in ether of an address changed by a given value:
+
+```ts
+await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
+  .to.changeEtherBalance(sender, -1000)
+```
+
+This matcher ignores the fees of the transaction, but you can include them with the `includeFee` option:
+
+```ts
+await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
+  .to.changeEtherBalance(sender, -22000, { includeFee: true })
+```
+
+### `.changeTokenBalance`
+
+Assert that the balance in some ERC20 token of an address changed by a given value:
+
+```ts
+await expect(token.transfer(receiver, 1000))
+  .to.changeTokenBalance(token, sender, -1000)
+```
+
+The first argument must be the contract of the token.
+
+### `.changeEtherBalances`
+
+Like `.changeEtherBalance`, but allows checking multiple addresses at the same time:
+
+```ts
+await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
+  .to.changeEtherBalances([sender, receiver], [-1000, 1000])
+```
+
+### `.changeTokenBalances`
+
+Like `.changeTokenBalance`, but allows checking multiple addresses at the same time:
+
+```ts
+await expect(token.transfer(receiver, 1000))
+  .to.changeTokenBalances(token, [sender, receiver], [-1000, 1000])
+```
+
+## Other matchers
+
+### `.withArgs`
+
+Can be used after a `.emit` or a `.revertedWithCustomError` matcher to assert the values of the event/error's arguments:
+
+```ts
+// events
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithCustomError(token, "InvalidTransferValue")
+  .withArgs(100);
+
+// errors
+await expect(token.transfer(address, 0))
+  .to.be.revertedWithCustomError(token, "InvalidTransferValue")
+  .withArgs(0);
+```
+
+If you don't care about the value of one of the arguments, you can use the `anyValue` predicate:
+
+```ts
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+
+await expect(factory.create(9999))
+  .to.emit(factory, "Created")
+  .withArgs(anyValue, 9999);
+```
+
+Predicates are just function that return true if the value is correct, and return false if it isn't, so you can create your own predicates:
+
+```ts
+function isEven(x: BigNumber): boolean {
+  return x.mod(2).isZero();
+};
+
+await expect(token.transfer(100))
+  .to.emit(token, "Transfer")
+  .withArgs(isEven);
+```
+
+### `.properAddress`
+
+Assert that the given string is a proper address:
+
+```ts
+expect("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266").to.be.properAddress();
+```
+
+### `.properPrivateKey`
+
+Assert that the given string is a proper private key:
+
+```ts
+expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to.be.properPrivateKey();
+```
+
+### `.properHex`
+
+Assert that the given string is a proper hexadecimal string of the given length:
+
+```ts
+expect("0x1234").to.be.properHex(4);
+```
+
+### `.hexEqual`
+
+Assert that the given strings hexadecimal strings correspond to the same numerical value:
+
+```ts
+expect('0x00012AB').to.hexEqual('0x12ab');
+```

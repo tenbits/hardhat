@@ -11,10 +11,13 @@ import { mine } from "../mine";
 import { latest } from "./latest";
 
 /**
- * Mines a new block whose timestamp is `amountInSeconds` after the latest block's timestamp
+ * Mines a new block whose timestamp is `amountInSeconds` after the latest block's timestamp.
  *
- * @param amountInSeconds number of seconds to increase the next block's timestamp by
- * @returns the timestamp of the mined block
+ * @param amountInSeconds Number of seconds to increase the next block's timestamp by.
+ * @returns The timestamp of the mined block.
+ * @example
+ * // advance time by one hour and mine a new block
+ * await helpers.time.increase(3600);
  */
 export async function increase(amountInSeconds: NumberLike): Promise<number> {
   const provider = await getHardhatProvider();

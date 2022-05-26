@@ -1,7 +1,9 @@
 import { getHardhatProvider } from "../../utils";
 
 /**
- * Returns the timestamp of the latest block
+ * Returns the timestamp of the latest block.
+ * @example
+ * await helpers.time.latest();
  */
 export async function latest(): Promise<number> {
   const provider = await getHardhatProvider();

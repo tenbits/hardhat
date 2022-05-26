@@ -11,9 +11,11 @@ import { mine } from "../mine";
 import { latest } from "./latest";
 
 /**
- * Mines a new block whose timestamp is `timestamp`
+ * Mines a new block whose timestamp is `timestamp`.
  *
- * @param timestamp Must be bigger than the latest block's timestamp
+ * @param timestamp Must be bigger than the latest block's timestamp.
+ * @example
+ * await helpers.time.increaseTo(newTimestamp);
  */
 export async function increaseTo(timestamp: NumberLike): Promise<void> {
   const provider = await getHardhatProvider();

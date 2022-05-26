@@ -10,6 +10,8 @@ import {
  *
  * @param address The address whose balance will be edited.
  * @param balance The new balance to set for the given address, in wei.
+ * @example
+ * await helpers.setBalance(address, 100n**18n);
  */
 export async function setBalance(
   address: string,

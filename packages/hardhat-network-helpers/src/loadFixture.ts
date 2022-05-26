@@ -24,6 +24,22 @@ const snapshots: Array<Snapshot<any>> = [];
  *
  * - Correct usage: `loadFixture(deployTokens)`
  * - Incorrect usage: `loadFixture(async () => { ... })`
+ *
+ * @param fixture The function that will be used to set up the fixture.
+ * @example
+ * async function deployContractsFixture() {
+ *   const token = await Token.deploy(...);
+ *   const exchange = await Exchange.deploy(...);
+ *
+ *   return { token, exchange };
+ * }
+ *
+ * it("test", async function () {
+ *   const { token, exchange } = await loadFixture(deployContractsFixture);
+ *
+ *   // use token and exchanges contracts
+ * })
+```
  */
 export async function loadFixture<T>(fixture: Fixture<T>): Promise<T> {
   const snapshot = snapshots.find((s) => s.fixture === fixture);

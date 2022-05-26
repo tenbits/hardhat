@@ -7,11 +7,13 @@ import {
 } from "../utils";
 
 /**
- * Writes a single position of an account's storage
+ * Writes a single position of an account's storage.
  *
- * @param address The address where the code should be stored
- * @param index The index in storage
- * @param value The value to store
+ * @param address The address where the code should be stored.
+ * @param index The index in storage.
+ * @param value The value to store.
+ * @example
+ * await helpers.setStorageAt(address, storageSlot, newValue);
  */
 export async function setStorageAt(
   address: string,
