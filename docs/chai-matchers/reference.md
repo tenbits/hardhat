@@ -10,13 +10,13 @@ When `@nomicfoundation/hardhat-chai-matchers` is used, equality comparisons of n
 expect(await token.totalSupply()).to.equal(1_000_000);
 ```
 
-will work. These assertions don't normally work because the value returned by `totalSupply()` is an [ethers' BigNumber](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/), and an instance of a `BigNumber` will always be different than a plain number.
+will work. These assertions don't normally work because the value returned by `totalSupply()` is an [ethers BigNumber](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/), and an instance of a `BigNumber` will always be different than a plain number.
 
 The supported types are:
 
 - Plain javascript numbers
 - [BigInts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
-- [Ethers' BigNumbers](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/)
+- [Ethers BigNumbers](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/)
 - [`bn.js`](https://github.com/indutny/bn.js/) instances
 - [`bignumber.js`](https://github.com/MikeMcl/bignumber.js/) instances
 
