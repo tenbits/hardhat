@@ -30,15 +30,13 @@ expect(await contract.getRatio()).to.deep.equal([100, 55])
 
 Several matchers are included to assert that a transaction reverted, and the reason of the revert.
 
-### `.reverted()`
+### `.reverted`
 
 Assert that a transaction reverted for any reason, without checking the cause of the revert:
 
 ```ts
-await expect(token.transfer(address, 0)).to.be.reverted();
+await expect(token.transfer(address, 0)).to.be.reverted;
 ```
-
-`.reverted` can also be used as a property (without parentheses), but we recommend using the method version.
 
 ### `.revertedWith`
 
@@ -104,7 +102,7 @@ await expect(token.transfer(address, 0))
   .to.be.revertedWithoutReason();
 ```
 
-This matcher differs from `.reverted()` in that it will fail if the transaction reverts with a reason string, custom error or panic code. Examples of Solidity expressions that revert without a reason are `require(false)` (without the reason string) and `assert(false)` before Solidity v0.8.0. This also happens for out-of-gas errors.
+This matcher differs from `.reverted` in that it will fail if the transaction reverts with a reason string, custom error or panic code. Examples of Solidity expressions that revert without a reason are `require(false)` (without the reason string) and `assert(false)` before Solidity v0.8.0. This also happens for out-of-gas errors.
 
 ## Events
 
@@ -225,7 +223,7 @@ await expect(token.transfer(100))
 Assert that the given string is a proper address:
 
 ```ts
-expect("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266").to.be.properAddress();
+expect("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266").to.be.properAddress;
 ```
 
 ### `.properPrivateKey`
@@ -233,7 +231,7 @@ expect("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266").to.be.properAddress();
 Assert that the given string is a proper private key:
 
 ```ts
-expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to.be.properPrivateKey();
+expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to.be.properPrivateKey;
 ```
 
 ### `.properHex`
