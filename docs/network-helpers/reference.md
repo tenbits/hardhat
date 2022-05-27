@@ -1,5 +1,7 @@
 # Reference
 
+This is the reference for the Hardhat Network Helpers library. This library contains utility functions to interact with the Hardhat Network in an easier and safer way.
+
 ## Mining blocks
 
 ### `mine([blocks], [options])`

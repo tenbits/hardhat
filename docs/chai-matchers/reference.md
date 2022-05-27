@@ -1,5 +1,7 @@
 # Reference
 
+This is the reference for the Hardhat Chai Matchers plugin. This is a [chai](https://www.chaijs.com/) plugin that adds new assertion capabilities for testing smart contracts.
+
 ## Numbers
 
 When `@nomicfoundation/hardhat-chai-matchers` is used, equality comparisons of numbers will work even if the numbers are represented by different types. This means that assertions like this:
