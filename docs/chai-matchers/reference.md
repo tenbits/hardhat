@@ -40,7 +40,7 @@ await expect(token.transfer(address, 0)).to.be.reverted;
 
 ### `.revertedWith`
 
-Assert that a transaction reverted with a given string reason:
+Assert that a transaction reverted with a specific reason string:
 
 ```ts
 await expect(token.transfer(address, 0)).to.be.revertedWith(
@@ -50,7 +50,7 @@ await expect(token.transfer(address, 0)).to.be.revertedWith(
 
 ### `.revertedWithCustomError`
 
-Assert that a transaction reverted with a given [custom error](https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement):
+Assert that a transaction reverted with a specific [custom error](https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement):
 
 ```ts
 await expect(token.transfer(address, 0)).to.be.revertedWithCustomError(
@@ -69,17 +69,17 @@ await expect(token.transfer(address, 0))
   .withArgs(0);
 ```
 
-Check the `.withArgs` matcher entry to learn more.
+See the [`.withArgs`](#withargs) matcher entry to learn more.
 
 ### `.revertedWithPanic`
 
-Assert that a transaction reverted with some [panic code](https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require):
+Assert that a transaction reverted with a [panic code](https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require):
 
 ```ts
 await expect(token.transfer(address, 0)).to.be.revertedWithPanic();
 ```
 
-An optional argument can be passed to assert that a given panic code was thrown:
+An optional argument can be passed to assert that a specific panic code was thrown:
 
 ```ts
 await expect(token.transfer(address, 0)).to.be.revertedWithPanic(0x12);
@@ -109,7 +109,7 @@ This matcher differs from `.reverted` in that it will fail if the transaction re
 
 ### `.emit`
 
-Assert that a transaction emits a given event:
+Assert that a transaction emits a specific event:
 
 ```ts
 await expect(token.transfer(address, 100)).to.emit(token, "Transfer");
@@ -125,17 +125,17 @@ await expect(token.transfer(address, 0))
   .withArgs(100);
 ```
 
-Check the `.withArgs` matcher entry to learn more.
+See the [`.withArgs`](#withargs) matcher entry to learn more.
 
 ## Balance change
 
-These matchers can be used to assert how the balance in ether or in some ERC20 token of a given address changed after the given transaction.
+These matchers can be used to assert how a given transaction affects the ether balance, or an ERC20 token balance, of a specific address.
 
 All these matchers assume that the given transaction is the only transaction mined in its block.
 
 ### `.changeEtherBalance`
 
-Assert that the balance in ether of an address changed by a given value:
+Assert that the ether balance of an address changed by a specific value:
 
 ```ts
 await expect(
@@ -153,7 +153,7 @@ await expect(
 
 ### `.changeTokenBalance`
 
-Assert that the balance in some ERC20 token of an address changed by a given value:
+Assert that an ERC20 token balance of an address changed by a specific value:
 
 ```ts
 await expect(token.transfer(receiver, 1000)).to.changeTokenBalance(
@@ -244,7 +244,7 @@ expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to
 
 ### `.properHex`
 
-Assert that the given string is a proper hexadecimal string of the given length:
+Assert that the given string is a proper hexadecimal string of a specific length:
 
 ```ts
 expect("0x1234").to.be.properHex(4);

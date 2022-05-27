@@ -1,7 +1,7 @@
 import { getHardhatProvider, assertValidAddress } from "../utils";
 
 /**
- * Allows Hardhat Network to sign transactions as the given address.
+ * Allows Hardhat Network to sign subsequent transactions as the given address.
  *
  * @param address The address to impersonate.
  * @example

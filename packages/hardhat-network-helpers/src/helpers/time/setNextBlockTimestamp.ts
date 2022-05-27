@@ -12,7 +12,7 @@ import { millis } from "./duration";
 /**
  * Sets the timestamp of the next block but doesn't mine one.
  *
- * @param timestamp Can be `Date` or Epoch seconds. Must be greater than the latest block's timestamp.
+ * @param timestamp Can be `Date` or [Epoch seconds](https://en.wikipedia.org/wiki/Unix_time). Must be greater than the latest block's timestamp.
  * @example
  * // set the timestamp of the next block but don't mine a new block
  * await helpers.time.setNextBlockTimestamp(newTimestamp);

@@ -12,7 +12,7 @@ export interface SnapshotRestorer {
 /**
  * Takes a snapshot of the state of the blockchain at the current block.
  *
- * @returns An object with a `restore` method that can be used to reset the network to this state.
+ * @returns An object with a `restore` method that can be used to reset the network to the state in the snapshot.
  * @example
  * // take a snapshot of the current state of the blockchain
  * const snapshot = await helpers.takeSnapshot();

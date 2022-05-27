@@ -59,7 +59,7 @@ await helpers.setBalance(address, 100n ** 18n);
 
 ### `setCode(address, code)`
 
-Modifies the bytecode stored at an account's address.
+Modifies the contract bytecode stored at an account's address.
 
 Parameters:
 
@@ -123,7 +123,7 @@ await helpers.getStorageAt(address, storageSlot);
 
 ### `impersonateAccount(address)`
 
-Allows Hardhat Network to sign transactions as the given address.
+Allows Hardhat Network to sign subsequent transactions as the given address.
 
 Parameters:
 
@@ -208,7 +208,7 @@ Sets the timestamp of the next block but doesn't mine one.
 
 Parameters:
 
-- `timestamp`: Can be `Date` or Epoch seconds. Must be greater than the latest block's timestamp.
+- `timestamp`: Can be `Date` or [Epoch seconds](https://en.wikipedia.org/wiki/Unix_time). Must be greater than the latest block's timestamp.
 
 Example:
 
@@ -223,7 +223,7 @@ await helpers.time.setNextBlockTimestamp(newTimestamp);
 
 Takes a snapshot of the state of the blockchain at the current block.
 
-Returns: An object with a `restore` method that can be used to reset the network to this state.
+Returns: An object with a `restore` method that can be used to reset the network to the state in the snapshot.
 
 Example:
 
@@ -239,9 +239,9 @@ await snapshot.restore();
 
 ### `loadFixture()`
 
-Executes the given function and takes a snapshot of the blockchain. Each time `loadFixture` is called again with the same function, the blockchain will be restored to that snapshot instead of executing the function again.
-
 Useful for `beforeEach` hooks that setup the desired state of the network.
+
+Executes the given function and takes a snapshot of the blockchain. Upon subsequent calls to `loadFixture` with the same function, rather than executing the function again, the blockchain will be restored to that snapshot.
 
 _Warning_: don't use `loadFixture` with an anonymous function, otherwise the function will be executed each time instead of using snapshots:
 
