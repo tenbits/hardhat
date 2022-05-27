@@ -10,7 +10,6 @@ expect(await token.totalSupply()).to.equal(1_000_000);
 
 will work. These assertions don't normally work because the value returned by `totalSupply()` is an [ethers' BigNumber](https://docs.ethers.io/v5/single-page/#/v5/api/utils/bignumber/), and an instance of a `BigNumber` will always be different than a plain number.
 
-
 The supported types are:
 
 - Plain javascript numbers
@@ -19,11 +18,10 @@ The supported types are:
 - [`bn.js`](https://github.com/indutny/bn.js/) instances
 - [`bignumber.js`](https://github.com/MikeMcl/bignumber.js/) instances
 
-
 This also works when deep-equal comparisons of arrays or objects are performed:
 
 ```ts
-expect(await contract.getRatio()).to.deep.equal([100, 55])
+expect(await contract.getRatio()).to.deep.equal([100, 55]);
 ```
 
 ## Reverted transactions
@@ -43,8 +41,9 @@ await expect(token.transfer(address, 0)).to.be.reverted;
 Assert that a transaction reverted with a given string reason:
 
 ```ts
-await expect(token.transfer(address, 0))
-  .to.be.revertedWith("transfer value must be positive");
+await expect(token.transfer(address, 0)).to.be.revertedWith(
+  "transfer value must be positive"
+);
 ```
 
 ### `.revertedWithCustomError`
@@ -52,8 +51,10 @@ await expect(token.transfer(address, 0))
 Assert that a transaction reverted with a given [custom error](https://docs.soliditylang.org/en/v0.8.14/contracts.html#errors-and-the-revert-statement):
 
 ```ts
-await expect(token.transfer(address, 0))
-  .to.be.revertedWithCustomError(token, "InvalidTransferValue");
+await expect(token.transfer(address, 0)).to.be.revertedWithCustomError(
+  token,
+  "InvalidTransferValue"
+);
 ```
 
 The first argument must be the contract that defines the error.
@@ -73,15 +74,13 @@ Check the `.withArgs` matcher entry to learn more.
 Assert that a transaction reverted with some [panic code](https://docs.soliditylang.org/en/v0.8.14/control-structures.html#panic-via-assert-and-error-via-require):
 
 ```ts
-await expect(token.transfer(address, 0))
-  .to.be.revertedWithPanic();
+await expect(token.transfer(address, 0)).to.be.revertedWithPanic();
 ```
 
 An optional argument can be passed to assert that a given panic code was thrown:
 
 ```ts
-await expect(token.transfer(address, 0))
-  .to.be.revertedWithPanic(0x12);
+await expect(token.transfer(address, 0)).to.be.revertedWithPanic(0x12);
 ```
 
 You can also import and use the `PANIC_CODES` dictionary:
@@ -89,8 +88,9 @@ You can also import and use the `PANIC_CODES` dictionary:
 ```ts
 import { PANIC_CODES } from "@nomicfoundation/hardhat-chai-matchers/panic";
 
-await expect(token.transfer(address, 0))
-  .to.be.revertedWithPanic(PANIC_CODES.DIVISION_BY_ZERO);
+await expect(token.transfer(address, 0)).to.be.revertedWithPanic(
+  PANIC_CODES.DIVISION_BY_ZERO
+);
 ```
 
 ### `.revertedWithoutReason`
@@ -98,8 +98,7 @@ await expect(token.transfer(address, 0))
 Assert that a transaction reverted without returning a reason:
 
 ```ts
-await expect(token.transfer(address, 0))
-  .to.be.revertedWithoutReason();
+await expect(token.transfer(address, 0)).to.be.revertedWithoutReason();
 ```
 
 This matcher differs from `.reverted` in that it will fail if the transaction reverts with a reason string, custom error or panic code. Examples of Solidity expressions that revert without a reason are `require(false)` (without the reason string) and `assert(false)` before Solidity v0.8.0. This also happens for out-of-gas errors.
@@ -111,8 +110,7 @@ This matcher differs from `.reverted` in that it will fail if the transaction re
 Assert that a transaction emits a given event:
 
 ```ts
-await expect(token.transfer(address, 100))
-  .to.emit(token, "Transfer");
+await expect(token.transfer(address, 100)).to.emit(token, "Transfer");
 ```
 
 The first argument must be the contract that emits the event.
@@ -138,15 +136,17 @@ All these matchers assume that the given transaction is the only transaction min
 Assert that the balance in ether of an address changed by a given value:
 
 ```ts
-await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
-  .to.changeEtherBalance(sender, -1000)
+await expect(
+  sender.sendTransaction({ to: receiver, value: 1000 })
+).to.changeEtherBalance(sender, -1000);
 ```
 
 This matcher ignores the fees of the transaction, but you can include them with the `includeFee` option:
 
 ```ts
-await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
-  .to.changeEtherBalance(sender, -22000, { includeFee: true })
+await expect(
+  sender.sendTransaction({ to: receiver, value: 1000 })
+).to.changeEtherBalance(sender, -22000, { includeFee: true });
 ```
 
 ### `.changeTokenBalance`
@@ -154,8 +154,11 @@ await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
 Assert that the balance in some ERC20 token of an address changed by a given value:
 
 ```ts
-await expect(token.transfer(receiver, 1000))
-  .to.changeTokenBalance(token, sender, -1000)
+await expect(token.transfer(receiver, 1000)).to.changeTokenBalance(
+  token,
+  sender,
+  -1000
+);
 ```
 
 The first argument must be the contract of the token.
@@ -165,8 +168,9 @@ The first argument must be the contract of the token.
 Like `.changeEtherBalance`, but allows checking multiple addresses at the same time:
 
 ```ts
-await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
-  .to.changeEtherBalances([sender, receiver], [-1000, 1000])
+await expect(
+  sender.sendTransaction({ to: receiver, value: 1000 })
+).to.changeEtherBalances([sender, receiver], [-1000, 1000]);
 ```
 
 ### `.changeTokenBalances`
@@ -174,8 +178,11 @@ await expect(sender.sendTransaction({ to: receiver, value: 1000 }))
 Like `.changeTokenBalance`, but allows checking multiple addresses at the same time:
 
 ```ts
-await expect(token.transfer(receiver, 1000))
-  .to.changeTokenBalances(token, [sender, receiver], [-1000, 1000])
+await expect(token.transfer(receiver, 1000)).to.changeTokenBalances(
+  token,
+  [sender, receiver],
+  [-1000, 1000]
+);
 ```
 
 ## Other matchers
@@ -211,11 +218,9 @@ Predicates are just function that return true if the value is correct, and retur
 ```ts
 function isEven(x: BigNumber): boolean {
   return x.mod(2).isZero();
-};
+}
 
-await expect(token.transfer(100))
-  .to.emit(token, "Transfer")
-  .withArgs(isEven);
+await expect(token.transfer(100)).to.emit(token, "Transfer").withArgs(isEven);
 ```
 
 ### `.properAddress`
@@ -231,7 +236,8 @@ expect("0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266").to.be.properAddress;
 Assert that the given string is a proper private key:
 
 ```ts
-expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to.be.properPrivateKey;
+expect("0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80").to
+  .be.properPrivateKey;
 ```
 
 ### `.properHex`
@@ -247,5 +253,5 @@ expect("0x1234").to.be.properHex(4);
 Assert that the given strings hexadecimal strings correspond to the same numerical value:
 
 ```ts
-expect('0x00012AB').to.hexEqual('0x12ab');
+expect("0x00012AB").to.hexEqual("0x12ab");
 ```

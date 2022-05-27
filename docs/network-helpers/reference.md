@@ -52,7 +52,7 @@ Parameters:
 Example:
 
 ```ts
-await helpers.setBalance(address, 100n**18n);
+await helpers.setBalance(address, 100n ** 18n);
 ```
 
 ### `setCode(address, code)`
@@ -241,7 +241,7 @@ Executes the given function and takes a snapshot of the blockchain. Each time `l
 
 Useful for `beforeEach` hooks that setup the desired state of the network.
 
-*Warning*: don't use `loadFixture` with an anonymous function, otherwise the function will be executed each time instead of using snapshots:
+_Warning_: don't use `loadFixture` with an anonymous function, otherwise the function will be executed each time instead of using snapshots:
 
 - Correct usage: `loadFixture(deployTokens)`
 - Incorrect usage: `loadFixture(async () => { ... })`
