@@ -1,5 +1,11 @@
 # hardhat
 
+## 2.12.7
+
+### Patch Changes
+
+- 1e07acbb1: Add BatchRequest support for WebSocket server
+
 ## 2.12.6
 
 ### Patch Changes
